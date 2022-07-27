@@ -1,0 +1,43 @@
+ (query of age)
+select OName ,YearodBirth
+,Year(Getdate()) as This_year
+,Year(Getdate())-YearodBirth As Age
+from OrganizersA
+order by age asc
+
+--------------------------------------------------------------------
+(query of event and budget)
+
+select EventA.EName,EventA.B_ID, Budget.Estimated_cost   
+from Budget,EventA
+where EventA.B_ID=Budget.B_ID
+and Estimated_cost between 100 and 200
+--------------------------------------------------------------------
+(query of subquery of org)
+select OName,O_ID,OEmail,Ophone,YearodBirth
+from OrganizersA
+where YearodBirth =(select MIN(YearodBirth)
+					from OrganizersA
+);
+--------------------------------------------------------------------
+(query of subquery of event)
+select ename,EType
+from EventA
+where EType=(
+            select EType 
+			from EventA
+			where E_ID=1
+)
+and noofguests> 
+(select noofguests
+from EventA
+where E_ID =2
+);
+---------------------------------------------------------------------
+(query of subquery of venue)
+select venue_Name,VEmail,Vphone
+from venue
+where  (venue_location) IN (select venue_location
+                            from venue
+							where venue_location='Roshdy El gaish road'
+);
